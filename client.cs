@@ -18,11 +18,11 @@ namespace socket
 				try {
 					sender.Connect(remoteEP);  
 					Console.WriteLine($"Socket connected to {sender.RemoteEndPoint.ToString()}");
-					byte[] msg = Encoding.Unicode.GetBytes("Test message");
-					sender.Send(msg);
-					Console.WriteLine($"Sent: {Encoding.Unicode.GetString(msg)}");
-					sender.Receive(bytes);
-					Console.WriteLine($"Received: {Encoding.Unicode.GetString(bytes)}");
+					Console.WriteLine("Podaj wiadomosc do przeslania");
+					string message = Console.ReadLine();
+					Console.WriteLine(message);
+					byte[] mess = Encoding.Unicode.GetBytes(message);
+					sender.Send(mess);					
 					sender.Shutdown(SocketShutdown.Both);  
 					sender.Close();
 				} catch (Exception e) {

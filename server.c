@@ -23,6 +23,7 @@ int main( void ) {
 	int 		fd, newfd;
 	char 		buffer[256];
 	socklen_t 	socklen;
+	char 		hex[200];
 	
 	struct 	sockaddr_in serv_addr, cli_addr;
 	
@@ -56,14 +57,24 @@ int main( void ) {
 		}else{					// a jesli bledu nie bylo...
 			/* wypisujemy informacje o polaczeniu *********************/
 			printf("Address: %s Port: %d\n",  inet_ntoa( cli_addr.sin_addr ), cli_addr.sin_port );
-			  
-			/* przekazujemy klientowi informacje o biezacym czasie ****/
-			bzero( buffer, 256 );
-			sprintf( buffer, "Current time: %d", (int) time( NULL ) );
-			n = write( newfd, buffer, sizeof( buffer ) );
-			if( n < 0 ) 	// sprawdzamy, czy wystapil blad ....
-				perror( "write()" );
+			
+			bzero(buffer, 256);
 
+			n = read(newfd, buffer, 255);
+
+			if( n < 0 ) 	// sprawdzamy, czy wystapil blad ....
+				perror("read()");
+			
+			printf(buffer);
+
+			int len = strlen(buffer);
+
+			for (int i = 0, j = 0; i < len; ++i, j += 2)
+			{
+				sprintf(hex + j, "%02x", buffer[i] & 0xff);
+			}
+
+			printf("%s\n", hex);
 			/* konczymy polaczenie ************************************/
 			close(newfd);
 		}
