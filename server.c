@@ -65,7 +65,6 @@ int main( void ) {
 			if( n < 0 ) 	// sprawdzamy, czy wystapil blad ....
 				perror("read()");
 			
-			printf(buffer);
 
 			int len = strlen(buffer);
 
