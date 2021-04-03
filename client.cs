@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -22,6 +24,10 @@ namespace socket
 					string message = Console.ReadLine();
 					Console.WriteLine("Your message");
 					Console.WriteLine(message);
+					int nProcessID = Process.GetCurrentProcess().Id;
+					Console.WriteLine("Your PID");
+					Console.WriteLine(nProcessID);
+					message = nProcessID.ToString() + message;
 					byte[] mess = Encoding.ASCII.GetBytes(message);
 					sender.Send(mess);					
 					sender.Shutdown(SocketShutdown.Both);  

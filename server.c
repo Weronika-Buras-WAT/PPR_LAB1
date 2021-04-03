@@ -66,7 +66,6 @@ int main( void ) {
 			char pid_number [6] = "";
 			char msg[256];
 
-
 			if ( PID == 0)  
 			{			
 
@@ -75,33 +74,36 @@ int main( void ) {
 				if( n < 0 ) 	// sprawdzamy, czy wystapil blad ....
 					perror("read()");
 
-				for (int i = 0; i < 4; i++) 
-				{
-					pid_number[i] = buffer[i];
-				}
-				printf("%s\n",pid_number);
-				for (int i = 0, j = 4; i < strlen(buffer); i++, j++)
-					{
-						msg[i]=buffer[j];
-					}
-				printf("%s\n",msg);
-				FILE *file = fopen( pid_number, "w+");
+				
+				 for (int i = 0; i < 4; i++) 
+				 {
+				 	pid_number[i] = buffer[i];
+				 }
+				 printf("PID number: %s\n",pid_number);
+				 for (int i = 0, j = 4; i < strlen(buffer); i++, j++)
+				 	{
+				 		msg[i]=buffer[j];
+				 	}
+				printf("Message received \n");
+				FILE *file = fopen(pid_number, "w+");
 
 				if (file != NULL) 
 				{
 					int len = strlen(msg);
-
 					for (int i = 0, j = 0; i < len; ++i, j += 2)
 					{
 						sprintf(hex + j, "%02x", msg[i] & 0xff);
 					}
-					
+
+					printf("File created \n");
 					fputs(hex, file);
 					fclose(file);
 
 				}
+				else {
+					printf("error");
+				}
 			}
-
 			
 			/* konczymy polaczenie ************************************/
 			close(newfd);
